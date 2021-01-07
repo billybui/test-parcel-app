@@ -45,8 +45,8 @@ resource "aws_instance" "web" {
     destination = "/var/www/startup.sh"
   }
 
-    provisioner "file" {
-    source      = "django"
+  provisioner "file" {
+    source      = "django/"
     destination = "/var/www"
   }
 
