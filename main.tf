@@ -30,29 +30,10 @@ resource "aws_instance" "web" {
   instance_type          = "t2.small"
   vpc_security_group_ids = [aws_security_group.web-sg.id]
 
-  provisioner "file" {
-    source      = "schema.sql"
-    destination = "/var/www/schema.sql"
-  }
-
-  provisioner "file" {
-    source      = "index.html"
-    destination = "/var/www/index.html"
-  }
-
-  provisioner "file" {
-    source      = "startup.sh"
-    destination = "/var/www/startup.sh"
-  }
-
-  provisioner "file" {
-    source      = "django/"
-    destination = "/var/www"
-  }
-
   user_data = <<-EOF
               #!/bin/bash
-              sudo chmod +x /var/www/startup.sh && sudo /var/www/startup.sh
+              git clone https://github.com/billybui/test-parcel-app.git
+              sudo chmod +x test-parcel-app/startup.sh && sudo test-parcel-app/startup.sh
               EOF
 }
 
