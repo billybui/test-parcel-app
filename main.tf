@@ -30,8 +30,6 @@ resource "aws_instance" "web" {
   instance_type          = "t2.small"
   vpc_security_group_ids = [aws_security_group.web-sg.id]
 
-  key_name = "tru"
-  
   provisioner "file" {
     source      = "schema.sql"
     destination = "/var/www/schema.sql"
