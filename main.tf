@@ -32,22 +32,22 @@ resource "aws_instance" "web" {
   key_name = "tru"
 
   provisioner "file" {
-    source      = "./schema.sql"
+    source      = "schema.sql"
     destination = "/var/www/schema.sql"
   }
 
   provisioner "file" {
-    source      = "./index.html"
+    source      = "index.html"
     destination = "/var/www/index.html"
   }
 
   provisioner "file" {
-    source      = "./startup.sh"
+    source      = "startup.sh"
     destination = "/var/www/startup.sh"
   }
 
     provisioner "file" {
-    source      = "./django"
+    source      = "django"
     destination = "/var/www"
   }
 
