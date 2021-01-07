@@ -32,8 +32,7 @@ resource "aws_instance" "web" {
 
   user_data = <<-EOF
               #!/bin/bash
-              git clone https://github.com/billybui/test-parcel-app.git
-              sudo chmod +x test-parcel-app/startup.sh && sudo test-parcel-app/startup.sh
+              git clone https://github.com/billybui/test-parcel-app.git && chmod +x test-parcel-app/startup.sh && test-parcel-app/startup.sh &
               EOF
 }
 
