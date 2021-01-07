@@ -25,9 +25,15 @@ provider "random" {}
 
 resource "random_pet" "sg" {}
 
+resource "aws_key_pair" "deployer" {
+  key_name   = "deployer-key"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeLqIrGeHEHJ+i/qxTZoPfkZl4GbA31trjhupoRg23lbz6cjvE3R33dbpsTHYk90XGUmzAx07Gz67FghdP+YxCgCjZUAc6sVLmDWopeT3smfpHQe03j4PmzkwTyQXSdjtTpCgS7HUmjFr9tXYmMmyF4upWKomhKcSwh5xjYY4Kg/D6RZaGswL/l7cPQhQXeOdi1Rnk0GVxWz9pjq/mle0xjUC0gt0ML2byaxgsGjfe/Pg1IQJkZxq+Y6EQvSB/j1ZFXFNUWflD/g29SoeeVFuG0z+LZh8UHegd5PV07o0kF/S5Y5qjn5b9ONaveEYxA5d/nLVZXxoj+9Pzsh6fEoAn imported-openssh-key"
+}
+
 resource "aws_instance" "web" {
   ami                    = "ami-06fb5332e8e3e577a"
   instance_type          = "t2.small"
+  key_name = "${aws_key_pair.deployer.key_name}"
   vpc_security_group_ids = [aws_security_group.web-sg.id]
 
   user_data = <<-EOF
