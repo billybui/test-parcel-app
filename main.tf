@@ -39,16 +39,7 @@ resource "aws_instance" "web" {
   user_data = <<-EOF
           #!/bin/bash
           git clone https://github.com/billybui/test-parcel-app.git
-          sudo apt update
-          sudo apt install -y python
-          sudo apt install -y python-pip
-          cd test-parcel-app/django
-          pip install -r requirements.txt
-          cd notejam
-          sudo python manage.py syncdb
-          sudo python manage.py migrate
-          sudo python manage.py runserver 0.0.0.0:8000
-          EOF
+        EOF
 }
 
 resource "aws_security_group" "web-sg" {
