@@ -35,6 +35,7 @@ resource "aws_instance" "web" {
   ami                    = "ami-06fb5332e8e3e577a"
   instance_type          = "t2.small"
   vpc_security_group_ids = [aws_security_group.web-sg.id]
+  
   user_data = <<-EOF
           #!/bin/bash
           git clone https://github.com/billybui/test-parcel-app.git
@@ -47,7 +48,7 @@ resource "aws_instance" "web" {
           sudo python manage.py syncdb
           sudo python manage.py migrate
           sudo python manage.py runserver 0.0.0.0:8000
-        EOF
+          EOF
 }
 
 resource "aws_security_group" "web-sg" {
