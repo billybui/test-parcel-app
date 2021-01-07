@@ -36,10 +36,7 @@ resource "aws_instance" "web" {
   instance_type          = "t2.small"
   vpc_security_group_ids = [aws_security_group.web-sg.id]
   
-  user_data = <<-EOF
-              #!/bin/bash
-              git clone https://github.com/billybui/test-parcel-app.git
-  EOF
+
 }
 
 resource "aws_security_group" "web-sg" {
