@@ -25,13 +25,7 @@ provider "random" {}
 
 resource "random_pet" "sg" {}
 
-resource "aws_key_pair" "deployer" {
-  key_name   = "ubuntu"
-  public_key = file("key.pub")
-}
-
 resource "aws_instance" "web" {
-  key_name               = aws_key_pair.deployer.key_name
   ami                    = "ami-06fb5332e8e3e577a"
   instance_type          = "t2.small"
   vpc_security_group_ids = [aws_security_group.web-sg.id]
