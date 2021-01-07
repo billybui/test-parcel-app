@@ -26,26 +26,21 @@ provider "random" {}
 resource "random_pet" "sg" {}
 
 resource "aws_instance" "web" {
-  ami                    = "ami-830c94e3"
-  instance_type          = "t2.micro"
+  ami                    = "ami-06fb5332e8e3e577a"
+  instance_type          = "t2.small"
   vpc_security_group_ids = [aws_security_group.web-sg.id]
 
   user_data = <<-EOF
               #!/bin/bash
-              cd test-parcel-app/django
-              pip install -r requirements.txt  
-              cd notejam
-              ./manage.py syncdb
-              ./manage.py migrate
-              ./manage.py runserver
+              sudo chmod +x test-parcel-app/startup.sh && sudo ./startup.sh
               EOF
 }
 
 resource "aws_security_group" "web-sg" {
   name = "${random_pet.sg.id}-sg"
   ingress {
-    from_port   = 8080
-    to_port     = 8080
+    from_port   = 8000
+    to_port     = 8000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
