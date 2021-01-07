@@ -25,10 +25,14 @@ provider "random" {}
 
 resource "random_pet" "sg" {}
 
+data "aws_key_pair" "my_key_pair" {
+  name = "tru"
+}
+
 resource "aws_instance" "web" {
   ami                    = "ami-06fb5332e8e3e577a"
   instance_type          = "t2.small"
-  key_name = "tru"
+  key_name = data.aws_key_pair.my_key_pair.name
   vpc_security_group_ids = [aws_security_group.web-sg.id]
 
   user_data = <<-EOF
