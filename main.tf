@@ -29,25 +29,26 @@ resource "aws_instance" "web" {
   ami                    = "ami-06fb5332e8e3e577a"
   instance_type          = "t2.small"
   vpc_security_group_ids = [aws_security_group.web-sg.id]
+  key_name = "tru"
 
   provisioner "file" {
-    source      = "django"
-    destination = "/var/www"
-  }
-
-  provisioner "file" {
-    source      = "schema.sql"
+    source      = "./schema.sql"
     destination = "/var/www/schema.sql"
   }
 
   provisioner "file" {
-    source      = "index.html"
+    source      = "./index.html"
     destination = "/var/www/index.html"
   }
 
   provisioner "file" {
-    source      = "startup.sh"
+    source      = "./startup.sh"
     destination = "/var/www/startup.sh"
+  }
+
+    provisioner "file" {
+    source      = "./django"
+    destination = "/var/www"
   }
 
   user_data = <<-EOF
