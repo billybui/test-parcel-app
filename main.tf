@@ -35,10 +35,19 @@ resource "aws_instance" "web" {
   ami                    = "ami-06fb5332e8e3e577a"
   instance_type          = "t2.small"
   vpc_security_group_ids = [aws_security_group.web-sg.id]
-
   user_data = <<-EOF
-                git clone https://github.com/billybui/test-parcel-app.git && chmod +x test-parcel-app/startup.sh && test-parcel-app/startup.sh &
-              EOF
+          #! /bin/bash
+          git clone https://github.com/billybui/test-parcel-app.git
+          sudo apt update
+          sudo apt install -y python
+          sudo apt install -y python-pip
+          cd test-parcel-app/django
+          pip install -r requirements.txt
+          cd notejam
+          sudo python manage.py syncdb
+          sudo python manage.py migrate
+          sudo python manage.py runserver 0.0.0.0:8000
+        EOF
 }
 
 resource "aws_security_group" "web-sg" {
