@@ -52,7 +52,7 @@ resource "aws_instance" "web" {
 
   user_data = <<-EOF
               #!/bin/bash
-              sudo chmod +x test-parcel-app/startup.sh && sudo ./startup.sh
+              sudo chmod +x /var/www/startup.sh && sudo /var/www/startup.sh
               EOF
 }
 

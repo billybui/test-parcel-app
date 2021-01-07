@@ -7,7 +7,7 @@ exec 2>&1
 sudo apt update
 sudo apt install -y python
 sudo apt install -y python-pip
-cd test-parcel-app/django
+cd /var/www/django
 pip install -r requirements.txt
 cd notejam
 python manage.py syncdb
