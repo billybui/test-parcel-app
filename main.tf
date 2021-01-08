@@ -37,8 +37,19 @@ resource "aws_instance" "web" {
   vpc_security_group_ids = [aws_security_group.web-sg.id]
 
   user_data = <<-EOF
-  git clone https://github.com/billybui/test-parcel-app.git && chmod +x test-parcel-app/startup.sh && test-parcel-app/startup.sh &
-              EOF
+  #!/bin/bash
+  git clone https://github.com/billybui/test-parcel-app.git
+  apt-get update
+  apt-get install -y python
+  apt-get install -y python-pip
+  cd test-parcel-app/django
+  pip install -r requirements.txt
+  cd notejam
+  python manage.py syncdb
+  python manage.py migrate
+  python manage.py runserver 0.0.0.0:8000
+  output : { all : '| tee -a /var/log/cloud-init-output.log' }
+  EOF
 }
 
 
